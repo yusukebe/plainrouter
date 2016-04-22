@@ -6,34 +6,34 @@ class PlainRouter
     @compiled_regexp
   end
 
-  def add(path, stuff)
+  def add(path_info, stuff)
     nodes, captures = [], []
     regexp = Regexp.union(/{((?:\{[0-9,]+\}|[^{}]+)+)}/,
                           /:([A-Za-z0-9_]+)/,
                           /(\*)/,
                           /([^{:*]+)/)
-    path.sub(/(^\/)/,'').split('/').each.with_index do |p, pos|
-      position, match = nil, nil
-      p.match(regexp).size.times do |i|
-        if Regexp.last_match(i)
-          match = Regexp.last_match(i)
-          position = i
+    path_info.sub(/(^\/)/,'').split('/').each.with_index do |path, pos|
+      match = {position: nil, value: nil}
+      path.match(regexp).size.times do |index|
+        last_match = Regexp.last_match(index)
+        if last_match
+          match[:value] = last_match
+          match[:position] = index
         end
       end
-      case position
+      case match[:position]
       when 1 then
-        res = match.split(':')
-        captures[pos] = res[0]
-        pattern = res[1] ? "(#{res[1]})" : "([^/]+)"
+        captures[pos], pattern = match[:value].split(':')
+        pattern = pattern ? "(#{pattern})" : "([^/]+)"
         nodes.push(pattern)
       when 2 then
-        captures[pos] = match
+        captures[pos] = match[:value]
         nodes.push("([^/]+)")
       when 3 then
         captures[pos] = '*'
         nodes.push("(.+)")
       else
-        nodes.push(p)
+        nodes.push(path)
       end
     end
     @routes.push({path: '/' + nodes.join('/'), stuff: stuff, captures: captures })
@@ -45,16 +45,16 @@ class PlainRouter
     @compiled_regexp = /\A#{Regexp.union(regexps)}\z/
   end
 
-  def match(path)
-    return nil if @compiled_regexp.nil?
-    match = path.match(@compiled_regexp)
+  def match(path_info)
+    return if @compiled_regexp.nil?
+    match = path_info.match(@compiled_regexp)
     @routes.size.times do |i|
       if Regexp.last_match("_#{i}")
         response = {}
         stuff = @routes[i][:stuff]
         captures = @routes[i][:captures]
-        path.gsub(/([^\/]+)/).with_index do |p, pos|
-          response[captures[pos]] = p if captures[pos] != nil
+        path_info.gsub(/([^\/]+)/).with_index do |path, pos|
+          response[captures[pos]] = path if captures[pos] != nil
         end
         if response.empty?
           return stuff
@@ -63,6 +63,6 @@ class PlainRouter
         end
       end
     end
-    return nil
+    return
   end
 end

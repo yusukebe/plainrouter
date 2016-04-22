@@ -29,6 +29,9 @@ dest, captured = router.match(env['PATH_INFO'])
 class SinatraLikeFramework
   def initialize
     @router = PlainRouter::Method.new
+    self.routes
+  end
+  def routes
   end
   def get(path, &block)
     @router.add('GET', path, block)
@@ -38,10 +41,10 @@ class SinatraLikeFramework
     unless block.instance_of?(Proc)
       return not_found
     end
-    res = block.call(params)
-    if res.instance_of?(Array)
-      return res
-    elsif res.instance_of?(String)
+    response = block.call(params)
+    if response.instance_of?(Array)
+      return response
+    elsif response.instance_of?(String)
       return [200, {"Content-Type" => "text/plain"}, [res]]
     end
     not_found
@@ -52,17 +55,17 @@ class SinatraLikeFramework
 end
 
 class SinatraLikeApplication < SinatraLikeFramework
-  def initialize
-    super()
+  def routes
     get '/' do
       'Hello World!'
     end
     get '/user/:name' do |params|
-      name = params["name"]
-      "Hello #{name}!"
+      "Hello #{params['name']}!"
     end
   end
 end
+
+run SinatraLikeApplication.new
 ```
 
 ## License
