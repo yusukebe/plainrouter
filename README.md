@@ -6,7 +6,23 @@ PlainRouter is a **fast** and **simple** routing engine for Ruby. Using `PlainRo
 
 ## Install
 
-...;
+Add this line to your application's Gemfile:
+
+```
+gem 'plainrouter'
+```
+
+And then execute:
+
+```
+$ bundle
+```
+
+Or install it yourself as:
+
+```
+$ gem install plainrouter
+```
 
 ## Usage
 
