@@ -25,4 +25,11 @@ describe PlainRouter::Method do
     router.add('POST', '/a', 'p')
     expect(router.match('HEAD', '/a')).to eq nil
   end
+  it 'should handle any /b' do
+    router = PlainRouter::Method.new
+    router.add('GET', '/a', 'g')
+    router.add('POST', '/a', 'p')
+    router.add(nil, '/b', 'any')
+    expect(router.match('POST', '/b')).to eq 'any'
+  end
 end
