@@ -21,7 +21,7 @@ class SinatraLikeFramework
     if response.instance_of?(Array)
       return response
     elsif response.instance_of?(String)
-      return [200, {"Content-Type" => "text/plain"}, [res]]
+      return [200, {"Content-Type" => "text/plain"}, [response]]
     end
     not_found
   end
