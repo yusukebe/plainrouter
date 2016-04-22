@@ -31,5 +31,4 @@ describe PlainRouter do
       router.match('/gfx/2013/12')
     ).to eq ['dispatch_month',{'user' => 'gfx', 'year' => '2013', 'month' => '12' }]
   end
-  
 end

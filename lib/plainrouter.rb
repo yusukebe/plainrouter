@@ -66,5 +66,4 @@ class PlainRouter
     end
     return nil
   end
-
 end
