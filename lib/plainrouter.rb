@@ -46,6 +46,7 @@ class PlainRouter
   end
 
   def match(path)
+    return nil if @compiled_regexp.nil?
     match = path.match(@compiled_regexp)
     @routes.size.times do |i|
       if Regexp.last_match("_#{i}")
