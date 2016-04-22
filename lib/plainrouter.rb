@@ -7,15 +7,13 @@ class PlainRouter
   end
 
   def add(path, stuff)
-    nodes = []
-    captures = []
+    nodes, captures = [], []
     regexp = Regexp.union(/{((?:\{[0-9,]+\}|[^{}]+)+)}/,
                           /:([A-Za-z0-9_]+)/,
                           /(\*)/,
                           /([^{:*]+)/)
     path.sub(/(^\/)/,'').split('/').each.with_index do |p, pos|
-      position = nil
-      match = nil
+      position, match = nil, nil
       p.match(regexp).size.times do |i|
         if Regexp.last_match(i)
           match = Regexp.last_match(i)
@@ -39,7 +37,7 @@ class PlainRouter
       end
     end
     @routes.push({path: '/' + nodes.join('/'), stuff: stuff, captures: captures })
-    self.compile()
+    self.compile
   end
 
   def compile
