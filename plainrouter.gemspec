@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Yusuke Wada"]
   spec.email         = ["yusuke@kamawada.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{Fast and simple routing engine for Ruby}
+  spec.description   = %q{PlainRouter is a fast and simple routing engine for Ruby. Using PlainRouter::Method, you can quickly make web application framework like Sinatra. PlainRouter is a porting project of Route::Boom.}
+  spec.homepage      = "https://github.com/yusukebe/plainrouter"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
