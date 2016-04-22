@@ -1,7 +1,6 @@
 # PlainRouter
 
 [![Build Status](https://travis-ci.org/yusukebe/plainrouter.svg?branch=master)](https://travis-ci.org/yusukebe/plainrouter)
-
 [![Gem Version](https://badge.fury.io/rb/plainrouter.svg)](https://badge.fury.io/rb/plainrouter)
 
 PlainRouter is a **fast** and **simple** routing engine for Ruby. Using `PlainRouter::Method`, you can quickly make web application framework like Sinatra. PlainRouter is a porting project of [Route::Boom](https://metacpan.org/pod/Router::Boom).
